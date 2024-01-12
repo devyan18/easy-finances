@@ -2,7 +2,7 @@
 pub mod finances {
     use serde::Serialize;
 
-    #[derive(Serialize, Debug)]
+    #[derive(Serialize, Debug, Deserialize)]
     pub struct Finance {
         fixed_costs: f32,
         investments: f32,
@@ -10,13 +10,13 @@ pub mod finances {
         variable_costs: f32,
     }
 
-    #[derive(Serialize, Debug)]
+    #[derive(Serialize, Debug, Deserialize)]
     pub struct FixedCost {
         name: String,
         amount: f32,
     }
 
-    #[derive(Serialize, Debug)]
+    #[derive(Serialize, Debug, Deserialize)]
     pub struct Investment {
         name: String,
         amount: f32,
@@ -38,13 +38,11 @@ pub mod finances {
         }
     }
 
+    #[tauri::command]
     pub fn add_investment(name: String, amount: f32) -> Investment {
         Investment {
             name,
             amount,
         }
     }
-
-
-
 }

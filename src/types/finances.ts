@@ -5,3 +5,8 @@ export interface BalanceFile {
   savings: number;
   variable_costs: number;
 }
+
+export interface FixedCost {
+  name: string;
+  amount: number;
+}
