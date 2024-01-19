@@ -1,38 +1,55 @@
-import { addFixedCost } from "./services/tauri.custom.services";
+import { Button, Modal, ModalContent, useDisclosure } from "@nextui-org/react";
+import CreateFixedCost from "./components/CreateFixedCost/CreateFixedCost";
+import { Navbar } from "./components";
+import CreateVariableCost from "./components/CreateVariableCost/CreateVariableCost";
 
 function App() {
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    const name = formData.get("name") as string;
-    const amount = formData.get("amount");
-
-    if (!amount) return;
-    if (!name) return;
-
-    let amoutNumber = 0;
-    if (typeof amount === "string") {
-      amoutNumber = parseInt(amount);
-      if (isNaN(amoutNumber)) return;
-    }
-
-    await addFixedCost({ name, amount: amoutNumber });
-  };
-
+  const {
+    isOpen: isOpenFixed,
+    onOpen: OnOpenFixed,
+    onOpenChange: onOpenChangeFixed,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenVariable,
+    onOpen: OnOpenVariable,
+    onOpenChange: onOpenChangeVariable,
+  } = useDisclosure();
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h2>Agregar Costo Fijo</h2>
-        <label htmlFor="name">Nombre: </label>
-        <input type="text" id="name" name="name" />
-        <br />
-        <label htmlFor="value">Valor: </label>
-        <input type="number" id="value" name="amount" />
-        <br />
-        <button>Agregar</button>
-      </form>
-    </div>
+    <>
+      <Navbar />
+      <div className="flex">
+        <h1>Hola mundo</h1>
+        <Button onPress={OnOpenFixed}>Create Fixed Cost</Button>
+        <Modal
+          size="md"
+          className="bg-blend-darken text-white rounded-2xl"
+          // height="auto"
+          backdrop="blur"
+          isOpen={isOpenFixed}
+          onOpenChange={onOpenChangeFixed}
+          isDismissable={false}
+        >
+          <ModalContent className="m-0 p-0">
+            {(onClose) => <CreateFixedCost onClose={onClose} />}
+          </ModalContent>
+        </Modal>
+
+        <Button onPress={OnOpenVariable}>Create Variable Cost</Button>
+        <Modal
+          size="md"
+          className="bg-blend-darken text-white rounded-2xl"
+          // height="auto"
+          backdrop="blur"
+          isOpen={isOpenVariable}
+          onOpenChange={onOpenChangeVariable}
+          isDismissable={false}
+        >
+          <ModalContent className="m-0 p-0">
+            {(onClose) => <CreateVariableCost onClose={onClose} />}
+          </ModalContent>
+        </Modal>
+      </div>
+    </>
   );
 }
 

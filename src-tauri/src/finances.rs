@@ -1,48 +1,22 @@
+pub mod utils {
+    use crate::{
+        file_manage::{constants::VARIABLE_COSTS_FILE_NAME, files::read_json_file},
+        types::VariableCost,
+    };
 
-pub mod finances {
-    use serde::Serialize;
+    pub fn exist_variable_cost(name: String) -> bool {
+        let variable_cost_history: Vec<VariableCost> =
+            match read_json_file::<Vec<VariableCost>>(VARIABLE_COSTS_FILE_NAME.to_string()) {
+                Ok(data) => data,
+                Err(_error) => return false,
+            };
 
-    #[derive(Serialize, Debug, Deserialize)]
-    pub struct Finance {
-        fixed_costs: f32,
-        investments: f32,
-        savings: f32,
-        variable_costs: f32,
-    }
-
-    #[derive(Serialize, Debug, Deserialize)]
-    pub struct FixedCost {
-        name: String,
-        amount: f32,
-    }
-
-    #[derive(Serialize, Debug, Deserialize)]
-    pub struct Investment {
-        name: String,
-        amount: f32,
-    }
-
-    pub fn get_easy_finances(salary: f32) -> Finance {
-        Finance {
-            fixed_costs: (salary * 0.6),
-            investments: (salary * 0.1),
-            savings: (salary * 0.1),
-            variable_costs: (salary * 0.2),
+        for variable_cost in variable_cost_history {
+            if variable_cost.name == name {
+                return true;
+            }
         }
-    }
 
-    pub fn add_fixed_cost(name: String, amount: f32) -> FixedCost {
-        FixedCost {
-            name,
-            amount,
-        }
-    }
-
-    #[tauri::command]
-    pub fn add_investment(name: String, amount: f32) -> Investment {
-        Investment {
-            name,
-            amount,
-        }
+        false
     }
 }
