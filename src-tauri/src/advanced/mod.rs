@@ -56,7 +56,6 @@ pub mod write {
 
     #[tauri::command]
     pub fn add_variable_cost(new_cost: VariableCost) -> CustomResponse {
-        println!("{:?}", new_cost);
         let variable_cost_history: Vec<VariableCost> =
             match read_json_file::<Vec<VariableCost>>(VARIABLE_COSTS_FILE_NAME.to_string()) {
                 Ok(data) => data,

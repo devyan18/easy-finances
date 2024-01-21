@@ -14,10 +14,21 @@ pub mod files {
 
     use super::constants::ADVANCED_FILE_HISTORY;
 
+    pub fn get_var () -> String {
+        let os = std::env::consts::OS.to_string();
+        
+        if os == "macos" {
+            return String::from("HOME");
+        } else {
+            return String::from("USERPROFILE");
+        }
+    }
+
+
     pub fn create_easy_finances_folder() {
         use std::fs;
-
-        let desktop: PathBuf = PathBuf::from(std::env::var("USERPROFILE").unwrap()).join("Desktop");
+        let var = get_var();
+        let desktop: PathBuf = PathBuf::from(std::env::var(var).unwrap()).join("Desktop");
         let easy_finances_folder: PathBuf = desktop.join(BALANCE_FOLDER_NAME);
 
         if !easy_finances_folder.exists() {
@@ -27,7 +38,9 @@ pub mod files {
 
     pub fn get_easy_finances_path() -> PathBuf {
         create_easy_finances_folder();
-        let desktop: PathBuf = PathBuf::from(std::env::var("USERPROFILE").unwrap()).join("Desktop");
+
+        let var = get_var();
+        let desktop: PathBuf = PathBuf::from(std::env::var(var).unwrap()).join("Desktop");
         let easy_finances_folder: PathBuf = desktop.join(BALANCE_FOLDER_NAME);
 
         easy_finances_folder

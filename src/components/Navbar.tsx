@@ -3,7 +3,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   Dropdown,
   DropdownTrigger,
@@ -35,7 +34,7 @@ const icons = {
   user: <CiUser className="text-danger" fill="currentColor" size={40} />,
 };
 
-export function CustomNavbar() {
+export default function CustomNavbar() {
   return (
     <Navbar>
       <NavbarBrand>
@@ -46,13 +45,13 @@ export function CustomNavbar() {
         />
         <p className="font-bold text-inherit">EB</p>
       </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="gap-4" justify="center">
         <Dropdown>
           <NavbarItem>
             <DropdownTrigger>
               <Button
                 disableRipple
-                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent flex lg:hidden"
                 endContent={icons.chevron}
                 radius="sm"
                 variant="light"
@@ -112,12 +111,9 @@ export function CustomNavbar() {
           color="secondary"
           text="Integrations"
         />
+        <CustomNavlink to="/costs" color="secondary" text="Costs" />
       </NavbarContent>
       <NavbarContent justify="end">
-        {" "}
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
         <NavbarItem>
           <SyncButton />
         </NavbarItem>

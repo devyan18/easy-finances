@@ -40,9 +40,9 @@
         "fullscreen": false,
         "resizable": true,
         "title": "My Finances",
-        "width": 800,
+        "width": 600,
         "height": 600,
-        "minWidth": 800,
+        "minWidth": 600,
         "minHeight": 600
       }
     ]
